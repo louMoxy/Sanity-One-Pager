@@ -14,9 +14,10 @@ import {projectId, dataset} from './utils/env'
 import {media} from 'sanity-plugin-media-i18n'
 import {languageFilter} from '@sanity/language-filter'
 import {baseLanguage, supportedLanguages} from './utils/localization'
+import {pageBuilderPreviewPlugin} from './plugins/pageBuilderPreview'
 
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
-const singletonTypes = new Set(['home'])
+const singletonTypes = new Set(['home', 'about'])
 
 export default defineConfig({
   name: 'default',
@@ -30,15 +31,19 @@ export default defineConfig({
     visionTool(),
     media(),
     presentationTool({
+      name: 'preview',
+      title: 'Visual Editing',
       previewUrl: {
-        initial: process.env.SANITY_STUDIO_PREVIEW_URL,
+        draftMode: {
+          enable: '/api/draft',
+        },
       },
-      allowOrigins: ['http://localhost:*'],
       resolve: {
         locations,
         mainDocuments,
       },
     }),
+    pageBuilderPreviewPlugin(),
     languageFilter({
       supportedLanguages,
       defaultLanguages: [baseLanguage?.id],

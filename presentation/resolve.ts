@@ -1,30 +1,29 @@
 import {defineDocuments, defineLocations} from 'sanity/presentation'
-import {baseLanguage} from '../utils/localization'
 
 export const locations = {
-  home: defineLocations({
-    locations: [
-      {
-        title: 'Home',
-        href: '/',
-      },
-    ],
-  }),
-  page: defineLocations({
-    select: {title: `title.${baseLanguage.id}`, slug: `slug.${baseLanguage.id}.current`},
+  pageBuilder: defineLocations({
+    select: {
+      title: 'title',
+      slug: 'slug.current',
+    },
     resolve: (doc) => ({
-      locations: [{title: doc?.title, href: `/${doc?.slug}`}],
+      locations: [
+        {
+          title: doc?.title || 'Untitled Page',
+          href: doc?.slug ? `/${doc.slug}` : '/',
+        },
+      ],
     }),
   }),
 }
 
 export const mainDocuments = defineDocuments([
   {
-    route: '/',
-    filter: `_type == "home"`,
+    route: '/:slug',
+    filter: `_type == "pageBuilder" && slug.current == $slug`,
   },
   {
-    route: '/page/:slug',
-    filter: `_type == "page" && slug.current == $slug`,
+    route: '/',
+    filter: `_type == "pageBuilder" && slug.current == "home"`,
   },
 ])
