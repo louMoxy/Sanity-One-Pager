@@ -1,0 +1,40 @@
+{
+  "name": "sanity-starter",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build && bun run generate-types",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "generate-types": "npx sanity schema extract --path types/schema.json && npx sanity typegen generate"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/language-filter": "^4.0.5",
+    "@sanity/vision": "^4.10.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "sanity": "^4.10.3",
+    "sanity-plugin-media-i18n": "^2.3.6",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^5.0.2",
+    "@types/react": "^19.1.13",
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "singleQuote": true
+  }
+}
